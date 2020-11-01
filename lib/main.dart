@@ -1,7 +1,7 @@
-import 'package:covid19_dashboard/dashboard.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:covid19_dashboard/home.dart';
 
 void main() {
   runApp(MyApp());
