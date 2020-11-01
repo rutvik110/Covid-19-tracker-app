@@ -1,10 +1,10 @@
 import 'package:covid19_dashboard/components.dart';
 import 'package:covid19_dashboard/dataprovider.dart';
-import 'package:covid19_dashboard/stylings.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+
 
 
 class HomeDashboard extends StatefulWidget {

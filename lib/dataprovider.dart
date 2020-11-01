@@ -175,3 +175,12 @@ class Secondcountry with ChangeNotifier{
   }
 
 }
+
+class Doughnotchart{
+  
+  Doughnotchart(this.year, this.cases,this.color);
+  final String year;
+  final double cases; 
+  final Color color;
+  
+  }
