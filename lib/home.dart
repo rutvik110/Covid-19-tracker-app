@@ -11,7 +11,7 @@ import 'package:covid19_dashboard/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:covid19_dashboard/dataprovider.dart';
+import 'package:covid19_dashboard/dataprovidernmodels.dart';
 
 
 
@@ -109,7 +109,7 @@ class _DashboardState extends State<Dashboard> {
               onTap: (index){
                 setState(() {
                   activeindex = index;
-                  print(index);
+             
                 });
               },
           ),  

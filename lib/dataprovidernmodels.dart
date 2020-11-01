@@ -184,3 +184,13 @@ class Doughnotchart{
   final Color color;
   
   }
+
+
+  class Comparechart{
+
+  String type;
+  double cases;
+
+  Comparechart({this.type,this.cases});
+
+}

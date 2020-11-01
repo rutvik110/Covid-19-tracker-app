@@ -1,12 +1,10 @@
 import 'package:covid19_dashboard/components.dart';
-import 'package:covid19_dashboard/dataprovider.dart';
+import 'package:covid19_dashboard/dataprovidernmodels.dart';
 import 'package:covid19_dashboard/functions.dart';
-import 'package:covid19_dashboard/homedashboard.dart';
-import 'package:covid19_dashboard/stylings.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:more/iterable.dart';
-import 'package:basic_utils/basic_utils.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
 class SearchTab extends StatefulWidget {
   @override

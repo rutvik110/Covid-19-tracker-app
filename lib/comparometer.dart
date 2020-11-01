@@ -1,13 +1,12 @@
 import 'package:covid19_dashboard/components.dart';
 import 'package:covid19_dashboard/functions.dart';
-import 'package:covid19_dashboard/homedashboard.dart';
+
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:covid19_dashboard/dataprovider.dart';
-import 'dart:math' as math;
-import 'package:covid19_dashboard/stylings.dart';
+import 'package:covid19_dashboard/comparometercomponents.dart';
+import 'package:covid19_dashboard/dataprovidernmodels.dart';
+
 class Comparometer extends StatefulWidget {
   @override
   _ComparometerState createState() => _ComparometerState();
@@ -81,10 +80,11 @@ class _ComparometerState extends State<Comparometer> {
             textAlign: TextAlign.center,
             ),
           ),
-
+  //Countries selection row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              //select first country
               Flexible(
                             child: FittedBox(
                                                         child: RaisedButton.icon(
@@ -160,10 +160,10 @@ class _ComparometerState extends State<Comparometer> {
             ],
 
           ),
-
+//Tabs section
           Container(
             height: 530.0,
-            // padding: EdgeInsets.all(20.0),
+           
             width: MediaQuery.of(context).size.width,
             child: DefaultTabController(
               initialIndex: 0,
@@ -179,7 +179,7 @@ class _ComparometerState extends State<Comparometer> {
                   tabs: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text('Vertical Bar'),
+                      child: Text('Bar graph'),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -190,255 +190,34 @@ class _ComparometerState extends State<Comparometer> {
 
                   body: TabBarView(children: [
                    
-
-          SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          backgroundColor: Colors.blue[50],
-                          primaryYAxis: NumericAxis(
-                            // desiredIntervals: 5,
-                            labelFormat: '{value}M',
-                            
-                            // minimum: 0,
-                            // maximum: 10,
-                            title: AxisTitle(
-                              text: 'Cases in millions'
-                            )
-                          ),
-                          
-                          series: <CartesianSeries>[
-                              ColumnSeries<Comparechart, String>(
-                                  dataSource: firstcountrydata,
-                                  color:Colors.blue,
-                                
-                                  dataLabelSettings: DataLabelSettings(
-                                    isVisible: true,
-                                    
-                                    
-                                    labelPosition: ChartDataLabelPosition.outside
-                                  ),
-                                  xValueMapper: (Comparechart data, _) => data.type,
-                                  yValueMapper: (Comparechart data, _) => data.cases
-                              ),
-                              ColumnSeries<Comparechart, String>(
-                                  dataSource: secondcountrydata ,
-                                   color:Colors.red,
-                                   dataLabelSettings: DataLabelSettings(
-                                    isVisible: true,
-                                    labelPosition: ChartDataLabelPosition.outside
-                                  ),
-                                  xValueMapper: (Comparechart data, _) => data.type,
-                                  yValueMapper: (Comparechart data, _) => data.cases
-                              ),
-                             
-                          ]
-                      ),
-  ///doughnots graph
+                    //bar graph
+                    Comparebargraph(firstcountrydata: firstcountrydata, secondcountrydata: secondcountrydata),
+              ///doughnots graph
                 Container(
                   color: Colors.blue[50],
                   child: Column(
                     children: [
-                      Row(
-                       
-                        children: [
-                          Expanded(
-                                                  child: Countrystatus(
-                              
-                                    totalcases: firstcountry.totalcases,
-                                    active: firstcountry.active,
-                                    recovered: firstcountry.recovered,
-                                    deaths: firstcountry.deaths,
-                                    shownumbers: false,
-                                    showlegend: false,
-                                    radius: '80',
-                                    title: firstcountry.name,
-                                    ),
-                          ),
-                         
 
-                         Expanded(
-                                    child: Countrystatus(
-                              
-                                    totalcases: secondcountry.totalcases,
-                                    active: secondcountry.active,
-                                    recovered: secondcountry.recovered,
-                                    deaths: secondcountry.deaths,
-                                    shownumbers: false,
-                                    showlegend: false,
-                                    radius: '80',
-                                    title: secondcountry.name,
-                                    ),
-                         ),         
-                        ],
-                      ),
+                      //circularcharts row
+                      Circularchartrow(firstcountry: firstcountry, secondcountry: secondcountry),
                       
                       Row(
                         children: [
-                          Expanded(child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                               SizedBox(width: 10.0,),
-                              Expanded(
-                                                              child: CasesContainer(
-                                                  type: 'Total Cases',
-                                                      cases: firstcountry.totalcases,
-                                                      color:Colors.blueAccent,
-                                                      boxShadow:Colors.blue[100]
-                                                ),
-                              ),
-                               SizedBox(width: 10.0,),
 
-                          Expanded(
-                                                      child: CasesContainer(
-                                                  type: 'Active ',
-                                                      cases: firstcountry.active,
-                                                      color:Colors.orangeAccent[700],
-                                                      boxShadow:Colors.orange[100]
-                                                ),
-                          ), 
-                           SizedBox(width: 10.0,),
-                            ],
-                          ),
-                          SizedBox(height: 10.0,),
-
-                          Row(
-                            children: [
-                                 SizedBox(width: 10.0,),
-                          Expanded(
-                                                      child: CasesContainer(
-                                                  type: 'Recovered',
-                                                      cases: firstcountry.recovered,
-                                                      color:Colors.greenAccent[700],
-                                                      boxShadow:Colors.green[100]
-                                                ),
-                          ),  
-                           SizedBox(width: 10.0,), 
-
-                          Expanded(
-                                                        child: CasesContainer(
-                                                  type: 'Deaths',
-                                                      cases: firstcountry.deaths,
-                                                      color:Colors.redAccent,
-                                                      boxShadow:Colors.red[100]
-                                                ),
-                           ), 
-                            SizedBox(width: 10.0,),
-                            ],
-                          ),//2nd row
-
-                          Wrap(
-          children: [
-            FlatButton.icon(onPressed: (){}, icon: Icon(Icons.arrow_upward_rounded,size: 17.0,color: Colors.blueAccent[700],), label: Text(firstcountry.newconfirmed,style: TextStyle(
-              color: Colors.blueAccent[700]
-            ),)),
-
-            FlatButton.icon(onPressed: (){}, icon: Icon(Icons.arrow_upward_rounded,size: 17.0,color: Colors.greenAccent[700],), label: Text(firstcountry.newrecovered,style: TextStyle(
-              color: Colors.greenAccent[700]
-            ),)),
-
-            FlatButton.icon(onPressed: (){}, icon: Icon(Icons.arrow_upward_rounded,size: 17.0,color: Colors.redAccent[700],), label: Text(firstcountry.newdeaths,style: TextStyle(
-              color: Colors.redAccent
-            ),))
-          ],
-        )
-
-
-                          
-                                                       
-                        ],
-                      )),
+                          //firstcountrydatacolumn
+                          Firstcountrydatacolumn(firstcountry: firstcountry),
 
 
                       //2nd column 
-                      Expanded(child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                               SizedBox(width: 10.0,),
-                               
-                              Expanded(
-                                                              child: CasesContainer(
-                                                  type: 'Total Cases',
-                                                      cases: secondcountry.totalcases,
-                                                      color:Colors.blueAccent,
-                                                      boxShadow:Colors.blue[100]
-                                                ),
-                              ),
-                               SizedBox(width: 10.0,),
-
-                          Expanded(
-                                                      child: CasesContainer(
-                                                  type: 'Active ',
-                                                      cases: secondcountry.active,
-                                                      color:Colors.orangeAccent[700],
-                                                      boxShadow:Colors.orange[100]
-                                                ),
-                          ), 
-                           SizedBox(width: 10.0,),
-                            ],
-                          ),
-                          SizedBox(height: 10.0,),
-
-                          Row(
-                            children: [
-                                 SizedBox(width: 10.0,),
-                          Expanded(
-                                                      child: CasesContainer(
-                                                  type: 'Recovered',
-                                                      cases: secondcountry.recovered,
-                                                      color:Colors.greenAccent[700],
-                                                      boxShadow:Colors.green[100]
-                                                ),
-                          ),  
-                           SizedBox(width: 10.0,), 
-
-                          Expanded(
-                                                        child: CasesContainer(
-                                                  type: 'Deaths',
-                                                      cases: secondcountry.deaths,
-                                                      color:Colors.redAccent,
-                                                      boxShadow:Colors.red[100]
-                                                ),
-                           ), 
-                            SizedBox(width: 10.0,),
-                          
-                            
-                            ],
-                          ),
-                          
-                          //2nd row
-                          // newcasesrow(secondcountry)
-                          Wrap(
-          children: [
-
-            FlatButton.icon(
-              
-              onPressed: (){}, icon: Icon(Icons.arrow_upward_rounded,size: 17.0,color: Colors.blueAccent[700],), label: Text(secondcountry.newconfirmed,style: TextStyle(
-              color: Colors.blueAccent[700]
-            ),)),
-
-            FlatButton.icon(onPressed: (){}, icon: Icon(Icons.arrow_upward_rounded,size: 17.0,color: Colors.greenAccent[700],), label: Text(secondcountry.newrecovered,style: TextStyle(
-              color: Colors.greenAccent[700]
-            ),)),
-
-            FlatButton.icon(onPressed: (){}, icon: Icon(Icons.arrow_upward_rounded,size: 17.0,color: Colors.redAccent[700],), label: Text(secondcountry.newdeaths,style: TextStyle(
-              color: Colors.redAccent
-            ),))
-          ],
-        )
-                                                       
+                      Secondcountrydatastatus(secondcountry: secondcountry)
                         ],
-                      ))
-                        ],
-                      ),//digram row
+                      ),
 
                       
                     ],
                   ),
                 ),
-                //3rd tab
+              
                
              
               ]), 
@@ -446,26 +225,10 @@ class _ComparometerState extends State<Comparometer> {
               
               ),
           ),
-            
-
-                      SizedBox(height:0.0),
-
-                     
-
+        
         ],
         
       ),
     );
   }
-}
-
-
-
-class Comparechart{
-
-  String type;
-  double cases;
-
-  Comparechart({this.type,this.cases});
-
 }
