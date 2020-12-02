@@ -47,7 +47,9 @@ class _SearchTabState extends State<SearchTab> {
          width: 300.0,
          child: TextField(
            controller: _textEditingController,
-           
+           style: TextStyle(
+             color: Colors.white
+           ),
            decoration: InputDecoration(
              labelText: 'Country',
              labelStyle: TextStyle(

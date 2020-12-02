@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:covid19_dashboard/dataprovider.dart';
+import 'package:covid19_dashboard/dataprovidernmodels.dart';
 
 import 'package:http/http.dart' as http;
 
